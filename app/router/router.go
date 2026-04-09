@@ -5,6 +5,10 @@ import (
 	"mini/database/ent"
 	"net/http"
 
+	ticketHandler "mini/app/ticket/handler"
+	ticketRepo "mini/app/ticket/repository"
+	ticketUC "mini/app/ticket/usecase"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,6 +23,11 @@ func (h *Handlers) Routes() {
 	v1 := h.R.Group(config.App.PrefixApi)
 	v1.GET("/check-connection", h.CheckConnection)
 	v1.GET("/version", h.Version)
+
+	// Ticket
+	repo := ticketRepo.NewTicketRepository()
+	uc := ticketUC.NewTicketUsecase(h.DB, repo)
+	ticketHandler.TicketRoute(uc, v1)
 }
 
 func (h *Handlers) CheckHealth(c *gin.Context) {

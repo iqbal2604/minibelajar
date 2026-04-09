@@ -17,6 +17,7 @@ type TicketRepository interface {
 	Delete(ctx context.Context, client *ent.Client, id uuid.UUID) error
 	FindByID(ctx context.Context, client *ent.Client, id uuid.UUID) (*ent.Ticket, error)
 	FindAll(ctx context.Context, client *ent.Client, q *ticketDomain.QueryParam) ([]*ent.Ticket, int, error)
+	CountAll(ctx context.Context, client *ent.Client) (int, error)
 }
 
 type ticketRepository struct{}
@@ -102,7 +103,7 @@ func (r *ticketRepository) Delete(ctx context.Context, client *ent.Client, id uu
 	return client.Ticket.DeleteOneID(id).Exec(ctx)
 }
 
-func (r *ticketRepository) CountAll(ctx context.Context, client ent.Client) (int, error) {
+func (r *ticketRepository) CountAll(ctx context.Context, client *ent.Client) (int, error) {
 	return client.Ticket.Query().Count(ctx)
 }
 
