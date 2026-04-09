@@ -139,8 +139,9 @@ type Response struct {
 }
 
 type TechnicianInfo struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID       string `json:"id"`
+	Name     string `json:"name"`
+	Position string `json:"position"`
 }
 
 // GenerateCode buat kode tiket otomatis contoh TKT-00001
